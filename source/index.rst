@@ -31,6 +31,7 @@ Table des matières
    unittest/index.rst
 
    colorama/index.rst
+   hug/index.rst
    pillow/index.rst
    pygame/index.rst
    pytest/index.rst
