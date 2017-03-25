@@ -86,6 +86,7 @@ L'exécution du code ci-dessus via la commande $ hug -f hug.py (avec hug.py comm
             }
         }
     }
+    }
 
 On peut remarquer que la documentation est très claire, la clé `overview` nous renseigne sur l'objectif de notre API, La clé usage renseigne sur le type de données renvoyées par l'API, dans notre cas, la ligne de code @hug.get() indique qu'il s'agit d'une requête GET. La suite du bloc JSON ci-dessus nous renseigne sur les paramètres des l'API, leurs types et le format de retour.
 
@@ -145,6 +146,7 @@ On peut déduire du code précédent que l'on a 4 versions. Pour le vérifier, i
                 }
             }
         }
+        }
     }
     
 Si on compare ce rendu JSON au précédent, on remarque la présence du champ `version`. La clé `version` de valeur 4 indique la version actuelle de l'API et la clé `versions` prend en valeur un tableau listant les différentes versions de notre API. Pour tester le bon fonctionnement du versioning, on peut écrire http://localhost:8000/v1/echo?text=toto. Dans cette URL, on spécifie la version que l'on souhaite utiliser, ici la version v1. En sortie on aura `toto`, ce qui correspond bien à la sortie attendue de la version 1. En changeant dans l'URL juste la version en la remplaçant par v2, v2 ou v4, la sortie est naturellement celle attendue suivant la version indiquée `Echo:toto`.
@@ -164,32 +166,7 @@ Il est possible d'ajouter des fonctions aux paramètres de nos méthodes, pour e
     def annota(text:int):
         return text
         
-Le code ci-dessus montre l'utilisation des annotations. l'argument de la fonction ``annota(...)`` est suivi du type int soit text::int. On comprend aisément que l'argument text est de type int. Vérifions la sortie suivant l'adresse http://localhost:8000 
-
-.. code-block:: json
-
-    {
-    "404": "The API call you tried to make was not defined. Here's a definition of the API to help you get going :)",
-    "documentation": {
-        "overview": "Test des types annotations",
-        "handlers": {
-            "/annota": {
-                "GET": {
-                    "outputs": {
-                        "format": "JSON (Javascript Serialized Object Notation)",
-                        "content_type": "application/json"
-                    },
-                    "inputs": {
-                        "text": {
-                            "type": "int(x=0) -> integer\nint(x, base=10) -> integer\n\nConvert a number or string to an integer, or         return 0 if no arguments\nare given.  If x is a number, return x.__int__().  For floating point\nnumbers, this truncates towards zero.\n\nIf x is not a number or if base is given, then x must be a string,\nbytes, or bytearray instance representing an integer literal in the\ngiven base.  The literal can be preceded by '+' or '-' and be surrounded\nby whitespace.  The base defaults to 10.  Valid bases are 0 and 2-36.\nBase 0 means to interpret the base from the string as an integer literal.\n>>> int('0b100', base=0)\n4"
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-On voit bien dans le bloc inputs la clé tpye, on peut clairement voir que l'entrée est de type int.
+Le code ci-dessus montre l'utilisation des annotations. L'argument de la fonction ``annota(...)`` est suivi du type int soit ``text:int``. On comprend aisément que l'argument text est de type int. En vérifier via l'adresse http://localhost:8000 , on voit bien dans le bloc inputs la clé type, qui explique clairement le type de données attendu en entrée. Ici un int.
 
 Si on entre l'adresse http://localhost:8000/annota?text=salut on a en retour une belle erreur comme celle ci-dessous:
 
@@ -239,7 +216,7 @@ Pour utiliser les directives dans nos fonctions, il existe deux méthodes. La pr
 
 Il est aussi possible d'ajouter une valeur ``hug_salutation_general='Yoo man'``.
 
-Note: il est important d'ajouter ``**kwargs``.
+Note: il est important d'ajouter ``**kwargs`.
 
 Format de sortie
 ================
