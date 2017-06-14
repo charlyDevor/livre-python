@@ -64,17 +64,6 @@ simplifiée. Les APIs implémentées dans d'autres frameworks peuvent l'être en
 quelques lignes avec hug. hug supporte le versioning, il permet la
 documentation par le code et il intègre la validation des données.
 
-Avant de commencer
-------------------
-
-Pour utiliser la bibliothèque, il faut au préalable l'installer pour ce faire,  on utilise la  commande
-``pip`` comme suit:
-
-.. code-block:: console
-
-    $ pip3 install hug -U
-
-
 
 Fonctionnement
 ==============
@@ -378,16 +367,30 @@ comme le montre le code ci-dessous
 
 .. code-block:: python3
 
-    @hug.format.content_type('file/text')
+    @hug.format.content_type('text/plain')
     def format_as_text(data, request=None, response=None):
         return str(content).encode('utf-8')
+        
+Le format par défaut est le :ref:`JSON <json-tutorial>`. L'une des technique pour définir un nouveau format par défaut est
+
+``hug.API(__name__).http.output_format = hug.<format cible>`` par exemple format_cible ``output_format.html``
+
+Si on souhaite un format pour une url spécifique et pas toutes les urls, par exemple pour notre méthode somme, on
+veut que le format soit en ``html`` on fera:
 
 
-.. warning::
+.. code-block:: python3
 
-    le ``Content-Type`` nommé ``file/text`` n'existe pas. Ce n'est pas donc pas
-    un exemple utilisable en l'état.
+    """Simple application effectuant une somme de deux nombres"""
+    import hug
 
+    @hug.get(output = hug.output = hug.output_format.html)
+    def somme(val1, val2):
+      """Retourne la somme des deux nombres passés en paramètre"""
+      return "<h1>{}</h1>".format(val1 + val2)
+      
+      
+donc il suffit de spécifier le format dans le get ``@hug.get(output = hug.output = hug.<format cible>)``.
 
 Le routage
 ----------
