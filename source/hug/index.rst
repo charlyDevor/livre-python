@@ -10,6 +10,7 @@
    :scale: 50%
    :alt: hug
 
+
 Par Charles Ombang Ndo [#co]_
 
 Introduction
@@ -43,10 +44,10 @@ Le concept RESTful web service repose sur les ressources qui sont représentées
 par les `URLs`. Le client envoie des requêtes via ces URLs au moyen des
 méthodes du protocole HTTP, ce sont les verbes:
 
-- GET: récupération de données,
-- POST: ajout de données
-- PUT: modifications de données
-- DELETE: suppression de données.
+   - GET: récupération de données,
+   - POST: ajout de données
+   - PUT: modifications de données
+   - DELETE: suppression de données.
 
 Les formats d'échanges sont nombreux. Dans ce chapitre, nous resterons sur du
 :ref:`JSON <json-tutorial>`.
@@ -388,9 +389,9 @@ Exemple, on crée une route vers notre méthode somme du fichier ``somme.py``
       """Retourne la somme des deux nombres passés en paramètre"""
       return val1 + val2
 
-Avant pour exécuter la méthode somme on entrait l'adresse suivante: <http://localhost:8000/somme?val1=..&val2=..>
+Avant pour exécuter la méthode somme on entrait l'adresse suivante: http://localhost:8000/somme?val1=..&val2=..
 Avec la route indiquée dans ``@hug.get()`` (/ajout) il suffit de remplace dans l'adresse précédente /somme par /ajout
-<http://localhost:8000/ajout?val1=..&val2=..>. 
+http://localhost:8000/ajout?val1=..&val2=... 
 
 Suivant la taille du projet, l'ajout des routes avec la méthode get peut surcharger le code. Il existe donc une solution,
 on peut avoir un fichier dans lequel nos méthodes sont déclarées et un second pour créer des routes.
@@ -405,14 +406,14 @@ Dans un autre fichier on va importer la méthode somme du fichier somme.py et cr
     api = hug.API(__name__)
     hug.get('/ajout')(somme.somme)
     
- Le résultat est le même toujours en entrant cette url <http://localhost:8000/ajout?val1=..&val2=..>
+ Le résultat est le même toujours en entrant cette url http://localhost:8000/ajout?val1=..&val2=..
  
  Un avantage du routage est qu'il permet de bien nommer les urls.
 
 Conclusion
 ==========
 
-La bibliothèque hug_ offre un moyen très simplifié d'écrire des API REST.
+La bibliothèque hug_ offre un moyen très simplifié d'écrire des APIs REST.
 La syntaxe est assez claire, la documentation bien élaborée depuis le code, le
 *versioning* est réalisé en une seule ligne de code.
 
