@@ -21,7 +21,7 @@ permettant d'implémenter une API. L'utilisation de la technologie ``hug_`` pour
 créer des APIs en Python est motivée par de nombreux avantages qui seront
 détaillés dans un chapitre dédié.
 
-RESTful web service et ``hug_``
+RESTful web service et ``hug``
 ------------------------------
 
 A l'origine REST (Representational State Transfer) est l'idée de définir un
@@ -45,7 +45,7 @@ méthodes du protocole HTTP, ce sont les verbes:
 Les formats d'échanges sont nombreux. Dans ce chapitre, nous resterons sur du
 :ref:`JSON <json-tutorial>`.
 
-Pourquoi choisir ``hug_``
+Pourquoi choisir ``hug``
 ------------------------
 
 Les très célèbres frameworks que sont Flask_ et Django_ sont bousculés par les
@@ -135,7 +135,7 @@ On peut remarquer que la documentation est très claire, la clé overview nous r
 Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans le navigateur l'adresse suivante localhost:8000/somme?val1=..&val2= .. il suffit de passer les valeurs aux paramètres.
 
 
-hug_ et le versioning
+hug et le versioning
 ====================
 
 Comme souligné auparavant, hug_ supporte et gère très bien le versioning. On peut avoir plusieurs versions de l'API dans la même application.
@@ -206,31 +206,31 @@ Validation automatique des données
 ==================================
 
 Il est possible d'ajouter des fonctions aux paramètres de nos méthodes, pour
-expliciter comment ils sont validés et transcris en type python. Pour faire de la validation 
-des données, il suffit de faire suivre le pa``argument:type``. L'avantage de l'utilisation d'une telle
+expliciter comment ils sont validés et transcris en type python. Pour cela, il suffit
+de mettre les arguments sous la forme suivante: ``argument:type``. L'avantage de l'utilisation d'une telle
 spécification est de clairement indiquer au niveau de la documentation le type
 de données attendues.
 
 .. code-block:: python3
 
-    """Test des types annotations"""
+    """Test de la validation automatique des données"""
     import hug
 
     @hug.get()
     def annota(text:int):
         return text
 
-Le code ci-dessus montre l'utilisation des annotations. l'argument de la
-fonction ``annota(...)`` est suivi du type int soit text::int. On comprend
+Le code ci-dessus montre comment valider les données automatiquement. l'argument de la
+fonction ``annota(...)`` est suivi du type int soit ``text::int``. On comprend
 aisément que l'argument text est de type int. Vérifions la sortie suivant
-l'adresse <http://localhost:8000>
+l'adresse <http://localhost:8000>.
 
 .. code-block:: json
 
     {
         "404": "The API call you tried to make was not defined. Here's a definition of the API to help you get going :)",
         "documentation": {
-            "overview": "Test des types annotations",
+            "overview": "Test de la validation automatique des données",
             "handlers": {
                 "/annota": {
                     "GET": {
@@ -263,8 +263,8 @@ une belle erreur comme celle ci-dessous:
         }
     }
 
-Il est important de noter que les annotations permettent implicitement de faire
-la validation automatique des données.
+Cette technique qu'apporte la bibliothèque hug_ permet de valider les données automatiquement. Cela est fait
+implicitement.
 
 
 Les directives
