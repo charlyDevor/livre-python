@@ -139,9 +139,7 @@ Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans
 ``localhost:8000/somme?val1=..&val2= ..`` et de passer les valeurs aux paramètres.
 
 ``Important``: Les APIs écrit avec hug_ peuvent être accédées depuis la console, pour
-cela, il suffit de rajouter ``@hug.cli()`` comme nous l'avons fait avec
-``@hug.get()``.
-
+cela, il suffit de rajouter ``@hug.cli()`` comme nous l'avons fait avec``@hug.get()``.
 
 hug et le versioning
 ====================
