@@ -1,6 +1,10 @@
 .. _hug-tutorial:
 
-
+.. image:: hug.png
+   :scale: 50%
+   :align: right
+   :alt: hug
+   
 =======
 ``hug``
 =======
