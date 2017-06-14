@@ -139,8 +139,12 @@ on obtient:
 
 On peut remarquer que la documentation est très claire, la clé overview nous renseigne sur l'objectif de notre API, La clé usage renseigne sur le type de données renvoyées par l'API, dans notre cas, la ligne de code ``@hug.get()`` indique qu'il s'agit d'une requête GET. La suite du bloc JSON ci-dessus nous renseigne sur les paramètres de l'API, leurs types et le format de retour.
 
-Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans le navigateur l'adresse suivante localhost:8000/somme?val1=..&val2= .. il suffit de passer les valeurs aux paramètres.
+Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans le navigateur l'adresse suivante:
+``localhost:8000/somme?val1=..&val2= ..`` et de passer les valeurs aux paramètres.
 
+``Important``: Les APIs écrit avec hug_ peuvent être accédées depuis la console, pour
+cela, il suffit de rajouter ``@hug.cli()`` comme nous l'avons fait avec
+``@hug.get()``.
 
 hug et le versioning
 ====================
@@ -216,7 +220,7 @@ Il est possible d'ajouter des fonctions aux paramètres de nos méthodes, pour
 expliciter comment ils sont validés et transcris en type python. Pour cela, il suffit
 de mettre les arguments sous la forme suivante: ``argument:type``. L'avantage de l'utilisation d'une telle
 spécification est de clairement indiquer au niveau de la documentation le type
-de données attendues. Ceci est connu sous le terme annotations_ en python
+de données attendues. Ceci est connu sous le terme annotations_ en python.
 
 .. code-block:: python3
 
@@ -366,8 +370,6 @@ comme le montre le code ci-dessous
     le ``Content-Type`` nommé ``file/text`` n'existe pas. Ce n'est pas donc pas
     un exemple utilisable en l'état.
 
-    .. Yoan
-
 Le Routing
 ----------
 
@@ -378,18 +380,15 @@ de façon plus élaborée et plus large.
 
 .. oui, car vous n'en parlez pas.
 
-Les APIs écrit avec ``hug`_` peuvent être accédées depuis la ligne de commande, pour
-cela, il suffit de rajouter ``@hug.cli()`` comme nous l'avons fait avec
-``@hug.get()``.
-
-.. quel rapport avec le routing?
-
 Conclusion
 ==========
 
 La bibliothèque hug_ offre un moyen très simplifié d'écrire des API REST.
 La syntaxe est assez claire, la documentation bien élaborée depuis le code, le
 *versioning* est réalisé en une seule ligne de code.
+
+:file:`test.txt`
+
 
 
 Bibliographie
