@@ -1,0 +1,12 @@
+>>> import json
+>>> from urllib2 import urlopen
+>>> document = json.load(urlopen('https://www.reddit.com/.json'))
+
+>>> doc = json.dumps(document, separators=',:').encode("utf-8")
+>>> len(doc)
+77244
+
+>>> import msgpack
+>>> pack = msgpack.packb(document)
+>>> len(pack)
+67017

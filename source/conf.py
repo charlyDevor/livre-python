@@ -12,7 +12,7 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-
+"""Sphinx configuration."""
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
@@ -31,9 +31,15 @@
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.intersphinx', 'sphinx.ext.todo', 'sphinx.ext.coverage',
-    'sphinx.ext.mathjax', 'sphinx.ext.ifconfig', 'sphinx.ext.viewcode',
-    'sphinx.ext.githubpages'
+    'sphinx.ext.autodoc',
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
+    'sphinx.ext.coverage',
+    'sphinx.ext.mathjax',
+    'sphinx.ext.ifconfig',
+    'sphinx.ext.viewcode',
+    'sphinx.ext.githubpages',
+    'sphinxcontrib_trio'
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -51,7 +57,7 @@ master_doc = 'index'
 # General information about the project.
 project = 'Bibliothèques Python'
 copyright = '2016-2017, HE-Arc'
-author = 'Yoan Blanc, ...'
+author = 'Yoan Blanc et al.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -126,8 +132,9 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
-latex_documents = [(master_doc, 'main.tex', 'Livre Python', 'HE-Arc',
-                    'scrbook'), ]
+latex_documents = [
+    (master_doc, 'main.tex', 'Livre Python', 'HE-Arc', 'scrbook'),
+]
 
 # -- Options for manual page output ---------------------------------------
 
@@ -167,7 +174,17 @@ epub_exclude_files = ['search.html']
 
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
+    'sphinx': ('http://www.sphinx-doc.org/en/stable/', None),
     'python': ('https://docs.python.org/3.6', None),
+    'invoke': ('http://docs.pyinvoke.org/en/latest/', None),
     'jsonschema': ('http://python-jsonschema.readthedocs.io/en/latest/', None),
-    'msgpack-python': ('http://msgpack-python.readthedocs.io/en/latest/', None)
+    'matplotlib': ('http://matplotlib.org/2.0.0', None),
+    'msgpack-python': ('http://msgpack-python.readthedocs.io/en/latest/',
+                       None),
+    'networkx': ('https://networkx.readthedocs.io/en/stable/', None),
+    'numpy': ('https://docs.scipy.org/doc/numpy/', None),
+    'Pillow': ('https://pillow.readthedocs.io/en/latest/', None),
+    'pygame': ('http://pygame.org/docs/', None),
+    'pytest': ('http://docs.pytest.org/en/latest/', None),
+    'watchdog': ('http://pythonhosted.org/watchdog/', None),
 }

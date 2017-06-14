@@ -29,6 +29,7 @@ permettant d'implémenter une API. L'utilisation de la technologie hug_ pour
 créer des APIs en Python est motivée par de nombreux avantages qui seront
 détaillés dans un chapitre dédié.
 
+
 RESTful web service et ``hug``
 ------------------------------
 
@@ -49,6 +50,7 @@ méthodes du protocole HTTP, ce sont les verbes:
    - POST: ajout de données
    - PUT: modifications de données
    - DELETE: suppression de données.
+
 
 Les formats d'échanges sont nombreux. Dans ce chapitre, nous resterons sur du
 :ref:`JSON <json-tutorial>`.
@@ -71,6 +73,7 @@ Pour utiliser la bibliothèque, il faut au préalable l'installer pour ce faire,
 .. code-block:: console
 
     $ pip3 install hug -U
+
 
 
 Fonctionnement
@@ -108,7 +111,9 @@ L'exécution du code ci-dessus via la commande.
 
 hug_ lance le serveur sur le port 8000. En entrant l'adresse
 ``http://localhost:8000`` on a une réponse au format :ref:`JSON <json-tutorial>`. Dans notre exemple
+
 on obtient:
+
 
 .. code-block:: json
 
@@ -138,6 +143,7 @@ on obtient:
         }
     }
 
+
 On peut remarquer que la documentation est très claire, la clé overview nous renseigne sur l'objectif de notre API, La clé usage renseigne sur le type de données renvoyées par l'API, dans notre cas, la ligne de code ``@hug.get()`` indique qu'il s'agit d'une requête GET. La suite du bloc :ref:`JSON <json-tutorial>` ci-dessus nous renseigne sur les paramètres de l'API, leurs types et le format de retour.
 
 Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans le navigateur l'adresse suivante:
@@ -147,10 +153,13 @@ Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans
 cela, il suffit de rajouter ``@hug.cli()`` comme nous l'avons fait avec
 ``@hug.get()``.
 
+
 hug et le versioning
 ====================
 
+
 Comme souligné auparavant, hug_ supporte et gère très bien le versioning. On peut avoir plusieurs versions de l'API dans la même application.
+
 
 
 .. code-block:: python3
@@ -166,6 +175,7 @@ Comme souligné auparavant, hug_ supporte et gère très bien le versioning. On 
     @hug.get('/echo', versions=range(2, 5))
     def echo(text):
         return "Echo: {text}".format(**locals())
+
 
 
 Le code ci-dessus montre la façon dont hug_ gère le versioning. Il suffit pour cela d'ajouter dans la méthode GET les versions que l'on veut. C'est une fois de plus assez claire, simple et compréhensible.
@@ -203,6 +213,7 @@ On peut déduire du code précédent que l'on a 4 versions. Pour le vérifier, i
         }
     }
 
+
 Si on compare ce rendu :ref:`JSON <json-tutorial>` au précédent, on remarque la présence du champ
 ``version``. La clé ``version`` de valeur 4 indique la version actuelle de l'API et
 la clé ``versions`` prend en valeur un tableau listant les différentes versions
@@ -232,10 +243,13 @@ de données attendues. Ceci est connu sous le terme annotations_ en python.
     def annota(text:int):
         return text
 
+
 Le code ci-dessus montre comment valider les données automatiquement. L'argument de la
 fonction ``annota(...)`` est suivi du type int soit ``text::int``. On comprend
 aisément que l'argument text est de type int. Vérifions la sortie suivant
 l'adresse <http://localhost:8000>.
+
+
 
 .. code-block:: json
 
@@ -261,6 +275,7 @@ l'adresse <http://localhost:8000>.
         }
     }
 
+
 On voit bien dans le bloc inputs la clé type, on peut clairement voir que
 l'entrée est de type int.
 
@@ -275,8 +290,10 @@ une belle erreur comme celle ci-dessous:
         }
     }
 
+
 Cette technique qu'apporte la bibliothèque hug_ permet de valider les données automatiquement. Cela est fait
 implicitement.
+
 
 
 Les directives
@@ -371,6 +388,7 @@ comme le montre le code ci-dessous
     le ``Content-Type`` nommé ``file/text`` n'existe pas. Ce n'est pas donc pas
     un exemple utilisable en l'état.
 
+
 Le routage
 ----------
 
@@ -410,6 +428,7 @@ Dans un autre fichier on va importer la méthode somme du fichier somme.py et cr
  Le résultat est le même toujours en entrant cette url http://localhost:8000/ajout?val1=..&val2=..
  
  Un avantage du routage est qu'il permet de bien nommer les urls.
+ 
 
 Conclusion
 ==========
@@ -433,3 +452,4 @@ Bibliographie
 .. _Flask: http://flask.pocoo.org/
 .. _Django: https://www.djangoproject.com/
 .. _annotations: http://sametmax.com/les-annotations-en-python-3/
+

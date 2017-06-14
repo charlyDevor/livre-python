@@ -13,4 +13,5 @@ with open(schema, encoding="utf-8") as fp:
 with open(filename, encoding="utf-8") as fp:
     data = json.load(fp)
 
-validate(data, schema)
+validate(data, sch)
+print(f"{filename} est valide selon {schema}.")

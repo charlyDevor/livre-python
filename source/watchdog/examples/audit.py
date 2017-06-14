@@ -1,10 +1,14 @@
-import eventHandler
+"""Audit simple utilisé comme exemple pour watchdog."""
+
 import time
+
 from watchdog.observers import Observer
+
+import eventhandler
 
 observer = Observer()
 
-observer.schedule(eventHandler.AuditHandler(), path='U:', recursive=True)
+observer.schedule(eventhandler.AuditHandler(), path='U:', recursive=True)
 observer.start()
 
 try:

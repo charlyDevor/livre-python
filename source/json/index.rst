@@ -35,8 +35,8 @@ booléen (``true``, ``false``) et ``null``.
     }
 
 Il serait possible de lire directement cette structure de donnée en Python si
-les booléens et la valeur vide n'étaient pas écrites différemment : ``True``,
-``False`` et ``None``.
+les valeurs booléennes et la valeur vide n'étaient pas écrites différemment :
+``True``, ``False`` et ``None``.
 
 Le module :py:mod:`json` est des plus simples à utiliser. Il est présenté par
 le fameux Kenneith Reitz dans `Hitchhiker's Guide To Python
@@ -49,30 +49,41 @@ L'API du module :py:mod:`json` est similaire à celle utilisée par
 :py:mod:`marshal` et :py:mod:`pickle` qui permettent de sérialiser des objets
 Python.
 
-- :py:meth:`json.load` charge un fichier JSON;
-- :py:meth:`json.loads` charge une chaîne de caractères;
-- :py:meth:`json.dump` écrit en JSON dans fichier;
-- :py:meth:`json.dumps` écrit en JSON dans une chaîne de caractères.
+:py:func:`~json.load`:
+    charge un fichier JSON;
+:py:func:`~json.loads`:
+    charge une chaîne de caractères;
+:py:func:`~json.dump`:
+    écrit en JSON dans fichier;
+:py:func:`~json.dumps`:
+    écrit en JSON dans une chaîne de caractères.
 
-.. code-block:: python3
+.. code-block:: pycon
 
-    import json
+    >>> import json
 
-    print(json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}]))
-    ["foo", {"bar": ["baz", null, 1.0, 2]}]
+    >>> json.dumps(['foo', {'bar': ('baz', None, 1.0, 2)}])
+    '["foo", {"bar": ["baz", null, 1.0, 2]}]'
 
-    print(json.dumps("🐍"))
-    "\\ud83d\\udc0d"
+    >>> json.dumps("🐍")
+    '"\\ud83d\\udc0d"'
 
-    print(json.loads('[1, 2, "Hello"]'))
+    >>> json.loads('[1, 2, "Hello"]')
     [1, 2, 'Hello']
 
 Un exemple travaillant avec un fichier externe. Un point très important est
 que JSON est toujours encodé en UTF-8.
 
 .. literalinclude:: ./examples/test.json
+   :caption: test.json
 
 .. literalinclude:: ./examples/example.py
+
+Résultat :
+
+.. literalinclude:: ./examples/test.out.json
+   :caption: test.out.json
+
 
 Validation
 ----------
@@ -81,6 +92,7 @@ Validation
 consultez la documentation de `JSON Schema`_ pour en savoir plus.
 
 .. literalinclude:: ./examples/schema.json
+   :caption: schema.json
 
 .. literalinclude:: ./examples/validation.py
 
@@ -92,16 +104,25 @@ représentation binaire. `MessagePack`_ permet de réduire efficacement l'espace
 nécessaire au stockage et à l'échange de tels documents. En Python, c'est le
 module :py:mod:`msgpack`.
 
-.. literalinclude:: ./examples/msg.py
+.. literalinclude:: ./examples/msg.pycon
+   :language: pycon
+
+Notez que cette petite différence n'est plus forcément intéressante si le
+contenu est compressé à l'aide de :py:mod:`gzip`.
+
+.. literalinclude:: ./examples/gzip.pycon
+   :language: pycon
+
+Parfois, le mieux est l'ennemi du bien.
 
 Streaming
 ---------
 
 Autre inconvénient majeur vis-à-vis du format XML est qu'il n'est pas aisé de
 lire un document au fur et à mesure qu'il est reçu, en *streaming*. En XML, on
-utilise une API nommée SAX (Simple API for XML). ``json`` propose un modèle
-demandant de charger l'entier d'un document en mémoire. Comme avec DOM en XML.
-Ce problème se résoud à l'aide de `YAJL`_ et du module `ijson`_.
+utilise une API nommée :abbr:`SAX (Simple API for XML)`. :py:mod:`json` propose
+un modèle demandant de charger l'entier d'un document en mémoire. Comme avec
+DOM en XML. Ce problème se résoud à l'aide de `YAJL`_ et du module `ijson`_.
 
 .. literalinclude:: ./examples/stream.py
    :linenos:

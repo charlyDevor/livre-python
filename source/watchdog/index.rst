@@ -1,8 +1,8 @@
 .. _watchdog-tutorial:
 
-========
-WatchDog
-========
+============
+``watchdog``
+============
 
 Par Paul Jeanbourquin [#pj]_
 
@@ -12,14 +12,19 @@ Introduction
 Watchdog est une librairie permettant l'utilisation d'événemement du système de f
 ichier (création de fichier, modification, ...).
 
-Cette librairie peut-être utilisée pour la mise en place d'un scanner de fichier dynamique
+Cette librairie peut-être utilisée (par exemple) pour la mise en place d'un scanner de fichier dynamique
 (exemple Scanner multimédia)
 ou pour la mise en place d'un système d'audit des événements sur les fichiers.
+Dans le cadre de cet article, notre fils rouge sera la création d'un programme d'audit
+des événements émis par les fichiers de musiques.
 
 Fonctionnement
 --------------
 
-Pour intercepter les événements il faut créer un class qui va contenir les fonctions par événements.
+Traitement de l'événement
+=========================
+
+Pour intercepter les événements il faut créer une classe qui va contenir les fonctions par événements.
 
 Un exemple d'une classe pour un système d'audit :
 
@@ -28,67 +33,166 @@ Un exemple d'une classe pour un système d'audit :
   from watchdog.events import FileSystemEventHandler
 
   class AuditHandler(FileSystemEventHandler):
-    def on_modified(self, event):
-      print("Le fichier %s a été modifié" % event.src_path)
-    def on_created(self,event):
-      print("Le fichier %s a été créé" % event.src_path)
-    def on_deleted(self,event):
-      print("Le fichier %s a été supprimé" % event.src_path)
+
+        def on_modified(self, event):
+            print("Le fichier %s a été modifié" % event.src_path)
+
+        def on_created(self,event):
+            print("Le fichier %s a été créé" % event.src_path)
+
+        def on_deleted(self,event):
+            print("Le fichier %s a été supprimé" % event.src_path)
 
 Liste d'événements interceptable :
 
-============  =============================================
+================  =============================================
       Nom                      Déclanchement
-============  =============================================
-on_modified   Modification d'un fichier / dossier
-on_created    Création d'un fichier / dossier
-on_deleted    Suppression d'un fichier / dossier
-on_moved      Déplacement / renomage d'un fichier / dossier
-on_any_event  Dans tous le cas au-dessus
-============  =============================================
+================  =============================================
+``on_modified``   Modification d'un fichier / dossier
+``on_created``    Création d'un fichier / dossier
+``on_deleted``    Suppression d'un fichier / dossier
+``on_moved``      Déplacement / renomage d'un fichier / dossier
+``on_any_event``  Dans tous les cas ci-dessus
+================  =============================================
 
-La classs doit, ensuite, être liée à un observateur.
-C'est ici que nous spécifierons le dossier qui devra être observer.
+L'objet ``event`` est une instance de la classe :py:class:`watchdog.events.FileSystemEvent`.
+Cette classe est dérivée pour chaque type d'événement. Elle contient les attributs suivant :
+
+=================   ===========================================================
+Attribut            Description
+=================   ===========================================================
+``event_type``      Le type d'événement en string
+``is_directory``    Boolean signalant si l'événement s'applique à un dossier
+``src_path``        Chemin du fichier ayant lancé l'événement
+``dest_path``       Fichier de destination (Uniquement lors d'un ``on_moved``)
+=================   ===========================================================
+
+Interception de l'événement
+===========================
+
+La classe doit, ensuite, être liée à un observateur.
+C'est ici que nous spécifierons le dossier qui devra être observé.
 
 .. code-block:: python3
 
-  observer = Observer() # Création de l'observeur
-  observer.schedule(eventHandler.AuditHandler(), path='U:', recursive=True) # Création du lien
-  observer.start() # Démarrage de l'observateur
+    import eventhandler
+    from watchdog.observers import Observer
 
-Dans ce cas l'observateur surveille le dossier "U:" de manière recursive.
+    # Création de l'observeur
+    observer = Observer()
+    # Création du lien
+    observer.schedule(eventhandler.AuditHandler(), path='U:', recursive=True)
+    # Démarrage de l'observateur
+    observer.start()
 
-Un observateur étant lancer dans un thread sépraré, il faut bloquer l'éxecution du script.
-Mais, nous aimerions aussi pouvoir fermer le script par interuption du clavier.
+.. Des commentaires sont sensés améliorer la compréhension, pas faire doublon.
+
+Dans ce cas, l'observateur surveille le dossier ``"U:"`` de manière récursive.
+
+Bloquer le script
+=================
+
+Un observateur étant lancé dans un thread séparé, il faut bloquer l'éxecution du script.
+Mais, nous aimerions aussi pouvoir fermer le script par interruption du clavier.
 La fermeture de l'observateur doit aussi être douce. Pour ce faire nous utiliserons le code ci-dessous.
 
+
 .. code-block:: python3
 
-  import time
+    import time
 
-  try:
-    while True: # Boucle infinie bloquant l'execution du script
-        time.sleep(1) # petite attente d'une millisecondes
-  except KeyboardInterrupt: # Prise en charge de l'interuption par le clavier
+    try:
+        while True: # Boucle infinie bloquant l'execution du script
+            time.sleep(1) # petite attente d'une milliseconde
+    except KeyboardInterrupt: # Prise en charge de l'interuption par le clavier
         observer.stop() # Arret de l'observateur
-        observer.join() # Attend que l'observateur se soit bien fermer
+    observer.join() # Attend que l'observateur se soit bien fermé
+..
+    interruption du/sur le clavier? ça sent le google translate
 
-Exemple
--------
+    Une milliseconde? non. ref:`time-tutorial`
 
-Todo
+.. todo::
 
-Contenu
-----------
+    Votre exemple n'est pas super bon. En tant qu'expert de la programmation
+    concurrente vous remarquerez que qu'il y a une opération bloquante dans ce
+    bout de code. La placer dans le ``try``/``except`` vous permet d'éviter
+    ce très vilain ``while True``.
 
-ToDo
+
+Filtrage
+============
+
+Il est possible de filtrer les fichiers sur lesquelles les events sont interceptés,
+ce qui est utile si l'on souhaite (par exemple) traiter que certain type de fichiers (par ex. les .mp3).
+
+Pour ce faire, il faut utiliser une autre classe de base pour la classe de traitement.
+Deux classes dérivant de :py:class:`watchdog.events.FileSystemEventHandler` sont fournies (liste dans le tableau ci-dessous).
+
+===============================   ===========================================
+Nom                               Utilisation
+===============================   ===========================================
+``FileSystemEventHandler``        Handler de base (sans filtre)
+``PatternMatchingEventHandler``   Handler utilisant un pattern pour filtrer
+``RegexMatchingEventHandler``     Handler utilisant un regex pour filtrer
+===============================   ===========================================
+
+L'utilisation de la version avec les patterns étant la même que celle avec les regexes,
+nous utiliserons la version patterns dans la suite.
+Par exemple si l'on souhaite reprendre le code du programme d'audit fait plus haut mais,
+qui s'occupe que des fichiers de musique (.mp3, .flac, .wav).
+
+.. code-block:: python3
+
+  from watchdog.events import PatternMatchingEventHandler
+
+  class AuditHandlerMusic(PatternMatchingEventHandler):
+      def on_modified(self, event):
+          print("Le fichier %s a été modifié" % event.src_path)
+      def on_created(self,event):
+          print("Le fichier %s a été créé" % event.src_path)
+      def on_deleted(self,event):
+          print("Le fichier %s a été supprimé" % event.src_path)
+
+La classe de traitement ne change quasiment pas la seule différence est le changement de la classe de base.
+La principale différence ce trouvera au moment de l'instantation de l'objet.
+
+.. code-block:: python3
+
+  import eventhandler
+  from watchdog.observers import Observer
+
+  observer = Observer()
+  handler = eventhandler.AuditHandlerMusic(patterns=["*.mp3", "*.wav", "*.flac"])
+  observer.schedule(handler, path='U:', recursive=True)
+  observer.start()
+
+Ici nous avons instancié l'objet avant de le passer en arguments à la fonction.
+Nous spécifions aussi un premier arguement du constructeur
+qui se trouve dans ce cas être les patterns à traiter.
+
+Les autres arguments possible sont dans l'ordre :
+
+========================================  ====================  ================================================================================
+Noms                                      Default               Utilisation
+========================================  ====================  ================================================================================
+``patterns``/``regexes``                  ``None``/``[".*"]``   Spécifie les patterns (respectivement regexes) à traiter
+``ignore_patterns`` / ``ignore_regexes``  ``None``/``[]``       Spécifie les patterns (respectivement regexes) à ignorer
+``ignore_directories``                    ``False``             Si mis à ``True`` ignore les dossiers
+``case_sensitive``                        ``False``             Si mis à ``True`` rend le patterns (respectivement regex) sensible à la casse
+========================================  ====================  ================================================================================
 
 Conclusion
 ----------
 
-ToDo
-
+En conclusion, la bibliothèque watchdog permet d'utiliser des événements, en provenance du système de fichiers, d'une manière facile et efficace.
+Watchdog permet aussi de filtrer les fichiers / dossiers émettant un événement.
+Cette bibliothèque permet aussi une grande réusabilité du code grâce, entre autre, à l'utilisation de classe pour le traitement des événements.
 
 .. [#pj] <paul.jeanbourquin@he-arc.ch>
 
-.. Bibliographie (ceci est un commentaire)
+Bibliographie
+-------------
+
+* watchdog documentation : http://pythonhosted.org/watchdog/
+* Tutoriel d'utilisation de watchdog : http://sametmax.com/reagir-a-un-changement-sur-un-fichier-avec-watchdog/
