@@ -24,7 +24,7 @@ possibles et les normes d'utilisation. La plupart des applications actuelles
 offrent ces *web services* plus connues sous RESTful web service.
 
 Dans l'univers Python, la bibliothèque hug_ est un outil assez puissant
-permettant d'implémenter une API. L'utilisation de la technologie ``hug_`` pour
+permettant d'implémenter une API. L'utilisation de la technologie hug_ pour
 créer des APIs en Python est motivée par de nombreux avantages qui seront
 détaillés dans un chapitre dédié.
 
@@ -216,7 +216,7 @@ Il est possible d'ajouter des fonctions aux paramètres de nos méthodes, pour
 expliciter comment ils sont validés et transcris en type python. Pour cela, il suffit
 de mettre les arguments sous la forme suivante: ``argument:type``. L'avantage de l'utilisation d'une telle
 spécification est de clairement indiquer au niveau de la documentation le type
-de données attendues.
+de données attendues. Ceci est connu sous le terme annotation_ en python
 
 .. code-block:: python3
 
@@ -227,7 +227,7 @@ de données attendues.
     def annota(text:int):
         return text
 
-Le code ci-dessus montre comment valider les données automatiquement. l'argument de la
+Le code ci-dessus montre comment valider les données automatiquement. L'argument de la
 fonction ``annota(...)`` est suivi du type int soit ``text::int``. On comprend
 aisément que l'argument text est de type int. Vérifions la sortie suivant
 l'adresse <http://localhost:8000>.
@@ -405,3 +405,4 @@ Bibliographie
 .. _hug: http://www.hug.rest/
 .. _Flask: http://flask.pocoo.org/
 .. _Django: https://www.djangoproject.com/
+.. _Annotation: http://sametmax.com/les-annotations-en-python-3/
