@@ -387,7 +387,7 @@ La bibliothèque hug_ offre un moyen très simplifié d'écrire des API REST.
 La syntaxe est assez claire, la documentation bien élaborée depuis le code, le
 *versioning* est réalisé en une seule ligne de code.
 
-:file:`test.txt`
+:file:`somme.py`
 
 
 
