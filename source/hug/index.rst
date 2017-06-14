@@ -1,7 +1,7 @@
 .. _hug-tutorial:
 
 =======
-``hug_``
+``hug``
 =======
 
 Par Charles Ombang Ndo [#co]_
