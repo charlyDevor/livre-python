@@ -10,7 +10,6 @@
    :scale: 50%
    :alt: hug
 
-
 Par Charles Ombang Ndo [#co]_
 
 Introduction
@@ -370,15 +369,45 @@ comme le montre le code ci-dessous
     le ``Content-Type`` nommé ``file/text`` n'existe pas. Ce n'est pas donc pas
     un exemple utilisable en l'état.
 
-Le Routing
+Le routage
 ----------
 
 C'est la notion qu'on retrouve dans la plupart des frameworks. Il s'agit de
-définir des chemins, urls d'accès aux données. `La documentation officielle
-<http://www.hug.rest/website/learn/routing>`_ détaille la notion de *Routing*
-de façon plus élaborée et plus large.
+définir des chemins, urls d'accès aux données. Le mécanisme est simplifié, il y'a plusieurs manières
+de faire le routage avec la bibliothèque hug_.
 
-.. oui, car vous n'en parlez pas.
+Exemple, on crée une route vers notre méthode somme du fichier ``somme.py``
+
+.. code-block:: python3
+
+    """Simple application effectuant une somme de deux nombres"""
+    import hug
+
+    @hug.get('/ajout')
+    def somme(val1:int, val2:int):
+      """Retourne la somme des deux nombres passés en paramètre"""
+      return val1 + val2
+
+Avant pour exécuter la méthode somme on entrait l'adresse suivante: <http://localhost:8000/somme?val1=..&val2=..>
+Avec la route indiquée dans ``@hug.get()`` (/ajout) il suffit de remplace dans l'adresse précédente /somme par /ajout
+<http://localhost:8000/ajout?val1=..&val2=..>. 
+
+Suivant la taille du projet, l'ajout des routes avec la méthode get peut surcharger le code. Il existe donc une solution,
+on peut avoir un fichier dans lequel nos méthodes sont déclarées et un second pour créer des routes.
+
+Dans un autre fichier on va importer la méthode somme du fichier somme.py et créer une route
+
+.. code-block:: python3
+
+    import hug
+    import somme
+
+    api = hug.API(__name__)
+    hug.get('/ajout')(somme.somme)
+    
+ Le résultat est le même toujours en entrant cette url <http://localhost:8000/ajout?val1=..&val2=..>
+ 
+ Un avantage du routage est qu'il permet de bien nommer les urls.
 
 Conclusion
 ==========
@@ -386,9 +415,6 @@ Conclusion
 La bibliothèque hug_ offre un moyen très simplifié d'écrire des API REST.
 La syntaxe est assez claire, la documentation bien élaborée depuis le code, le
 *versioning* est réalisé en une seule ligne de code.
-
-:file:`somme.py`
-
 
 
 Bibliographie
