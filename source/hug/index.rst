@@ -216,7 +216,7 @@ Il est possible d'ajouter des fonctions aux paramètres de nos méthodes, pour
 expliciter comment ils sont validés et transcris en type python. Pour cela, il suffit
 de mettre les arguments sous la forme suivante: ``argument:type``. L'avantage de l'utilisation d'une telle
 spécification est de clairement indiquer au niveau de la documentation le type
-de données attendues. Ceci est connu sous le terme annotation_ en python
+de données attendues. Ceci est connu sous le terme annotations_ en python
 
 .. code-block:: python3
 
