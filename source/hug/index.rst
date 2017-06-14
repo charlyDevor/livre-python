@@ -46,10 +46,12 @@ Le concept RESTful web service repose sur les ressources qui sont représentées
 par les `URLs`. Le client envoie des requêtes via ces URLs au moyen des
 méthodes du protocole HTTP, ce sont les verbes:
 
+
    - GET: récupération de données,
    - POST: ajout de données
    - PUT: modifications de données
    - DELETE: suppression de données.
+   
 
 
 Les formats d'échanges sont nombreux. Dans ce chapitre, nous resterons sur du
@@ -138,13 +140,12 @@ On peut remarquer que la documentation est très claire, la clé overview nous r
 Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans le navigateur l'adresse suivante:
 ``localhost:8000/somme?val1=..&val2= ..`` et de passer les valeurs aux paramètres.
 
-``Important``: Les APIs écrit avec hug_ peuvent être accédées depuis la console, pour
-cela, il suffit de rajouter ``@hug.cli()`` comme nous l'avons fait avec ``@hug.get()``.
+Important: Les APIs écrit avec hug_ peuvent être accédées depuis la console, pour cela, il suffit de rajouter ``@hug.cli()`` 
+comme nous l'avons fait avec ``@hug.get()``.
 
 
-hug et le versioning
+Hug et les versions
 ====================
-
 
 Comme souligné auparavant, hug_ supporte et gère très bien le versioning. On peut avoir plusieurs versions de l'API dans la même application.
 
