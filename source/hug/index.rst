@@ -137,7 +137,7 @@ on obtient:
         }
     }
 
-On peut remarquer que la documentation est très claire, la clé overview nous renseigne sur l'objectif de notre API, La clé usage renseigne sur le type de données renvoyées par l'API, dans notre cas, la ligne de code ``@hug.get()`` indique qu'il s'agit d'une requête GET. La suite du bloc JSON ci-dessus nous renseigne sur les paramètres de l'API, leurs types et le format de retour.
+On peut remarquer que la documentation est très claire, la clé overview nous renseigne sur l'objectif de notre API, La clé usage renseigne sur le type de données renvoyées par l'API, dans notre cas, la ligne de code ``@hug.get()`` indique qu'il s'agit d'une requête GET. La suite du bloc :ref:`JSON <json-tutorial>` ci-dessus nous renseigne sur les paramètres de l'API, leurs types et le format de retour.
 
 Maintenant pour voir le résultat de notre (petite) API, il suffit d'entrer dans le navigateur l'adresse suivante:
 ``localhost:8000/somme?val1=..&val2= ..`` et de passer les valeurs aux paramètres.
@@ -202,11 +202,11 @@ On peut déduire du code précédent que l'on a 4 versions. Pour le vérifier, i
         }
     }
 
-Si on compare ce rendu JSON au précédent, on remarque la présence du champ
+Si on compare ce rendu :ref:`JSON <json-tutorial>` au précédent, on remarque la présence du champ
 ``version``. La clé ``version`` de valeur 4 indique la version actuelle de l'API et
 la clé ``versions`` prend en valeur un tableau listant les différentes versions
 de notre API. Pour tester le bon fonctionnement du versioning, on peut écrire
-<http://localhost:8000/v1/echo?text=toto>. Dans cette URL, on spécifie la version
+http://localhost:8000/v1/echo?text=toto. Dans cette URL, on spécifie la version
 que l'on souhaite utiliser, ici la version v1. En sortie on aura ``toto``, ce qui
 correspond bien à la sortie attendue de la version 1. En changeant dans l'URL
 juste la version en la remplaçant par v2, v2 ou v4, la sortie est naturellement
@@ -263,7 +263,7 @@ l'adresse <http://localhost:8000>.
 On voit bien dans le bloc inputs la clé type, on peut clairement voir que
 l'entrée est de type int.
 
-Si on entre l'adresse <http://localhost:8000/annota?text=salut> on a en retour
+Si on entre l'adresse http://localhost:8000/annota?text=salut on a en retour
 une belle erreur comme celle ci-dessous:
 
 .. code-block:: json
