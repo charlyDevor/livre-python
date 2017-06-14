@@ -8,8 +8,9 @@
 
 .. image:: hug.png
    :scale: 50%
+   :align: center
    :alt: hug
-
+   
 
 Par Charles Ombang Ndo [#co]_
 
