@@ -402,7 +402,7 @@ Bibliographie
 
 .. liens externes.
 
-.. _hug: <http://www.hug.rest/>
+.. _hug: http://www.hug.rest/
 .. _Flask: http://flask.pocoo.org/
 .. _Django: https://www.djangoproject.com/
-.. _Annotation: http://sametmax.com/les-annotations-en-python-3/
+.. _annotations: http://sametmax.com/les-annotations-en-python-3/
